@@ -1,7 +1,13 @@
+
+/* Imported Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;1,600&family=Jost:wght@500&display=swap');
+
 :root {
     background-color: rgb(154, 44, 166);
 }
-
+*{
+    font-family: 'Chakra Petch', bold;
+}
 h1 {
     justify-content: center;
     display: flex;
