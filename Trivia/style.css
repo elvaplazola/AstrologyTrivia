@@ -11,6 +11,10 @@ h1 {
 .fa-moon {
     margin-left: 1rem;
 }
+.fa-star {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
 h2{
     font-size: 4.2rem;
     margin-bottom: 4rem;
@@ -40,4 +44,13 @@ h2{
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+}
+.correct {
+    background: linear-gradient(32deg, rgb(39, 247, 230) 0%, rgb(51, 254, 227) 100%);
+    color:white;
+    font-style: bold;
+}
+.incorrect {
+    background: linear-gradient(32deg rgba(230, 29, 29, 1)0%, rgb(224, 11, 11, 1) 100%);
+    font-style: bold;
 }
