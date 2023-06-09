@@ -1,5 +1,5 @@
 // Declare Variables
-
+// referred to following YT video - https://www.youtube.com/watch?v=f4fB9Xg2JEY
 let questionElement = document.getElementById("question")
 let answerElement =document.getElementById("answers")
 let nextElement =document.getElementById("next-btn")
@@ -100,10 +100,14 @@ let score = 0
 function startGame () {
     questionCounter = 0
     score = 0
-    availableQuestions = [...questions]
-    getNewQuestion = ()
+    nextElement.innerHTML= "Next";
+    getNewQuestion();
 }
-
+// Added callback function to retrieve new question
+// referred to website - https://www.programiz.com/javascript/callback
 function getNewQuestion () {
-    if(availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS)
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionnmbr=currentQuestionIndex + 1;
+    questionElement.innerHTML = questionnmbr + ". " + currentQuestion.question;
 }
