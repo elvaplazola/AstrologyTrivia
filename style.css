@@ -1,62 +1,52 @@
-
-/* Imported Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;1,600&family=Jost:wght@500&display=swap');
-
-:root {
-    background-color: rgb(154, 44, 166);
-}
-*{
-    font-family: 'Chakra Petch', bold;
-}
-h1 {
-    justify-content: center;
-    display: flex;
-    font-size: 6rem;
-    color: rgb(244, 216, 182);
-}
-.fa-moon {
-    margin-left: 1rem;
-}
-.fa-star {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
-h2{
-    font-size: 4.2rem;
-    margin-bottom: 4rem;
-}
-.btn {
-    display: flex;
-    justify-content: center;
-    font-size: 2rem;
-    padding: 2rem 0;
-    width: 60%;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
     text-align: center;
-    margin-bottom: 1rem;
-    margin-left: 20rem;
-    text-decoration: none;
-    color: black;
-    background: linear-gradient(90deg, rgb(250, 254, 6) 0%, rgb(238, 255, 0) 100%);
-    border-radius: 4px;
+    margin: 0;
+    padding: 20px;
 }
-/* Added animation to button when hovering */
-.btn:hover {
+
+#question-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#choice-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.choice {
+    margin: 10px;
+}
+
+.choice-text {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    background-color: #fff;
     cursor: pointer;
-    box-shadow: 0 0.4rem 1.4rem 0 rgb(232, 221, 5);
-    transition: transform 150ms;
-    transform: scale(1.03);
+    transition: background-color 0.3s;
 }
-.btn[disabled]:hover{
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
+
+.choice-text:hover {
+    background-color: #e9e9e9;
 }
-.correct {
-    background: linear-gradient(32deg, rgb(39, 247, 230) 0%, rgb(51, 254, 227) 100%);
-    color:white;
-    font-style: bold;
+
+#progress {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
 }
-.incorrect {
-    background: linear-gradient(32deg rgba(230, 29, 29, 1)0%, rgb(224, 11, 11, 1) 100%);
-    font-style: bold;
+
+#progressBar {
+    background-color: #ccc;
+    height: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
