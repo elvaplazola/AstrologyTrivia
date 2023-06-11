@@ -4,16 +4,18 @@ const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
 const scoreText = document.querySelector('#scoreText');
 const progressBarTracker = document.querySelector('#progressBarTracker');
+progressBarTracker.classList.add('progress-bar');
 
 // Game variables
 const SCORE_POINTS = 10;
 const MAX_QUESTIONS = 10;
-const MAX_PROGRESS_WIDTH = 0;
+const MAX_PROGRESS_WIDTH = 100;
 
 let currentQuestion = {};
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
+let trackerWidth = 0;
 
 // Astrology Questions
 const questions = [
@@ -119,15 +121,19 @@ function startGame() {
 }
 // Generate a new question
 function getNewQuestion() {
-    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+
+    // Update progress bar tracker width
+    trackerWidth += (MAX_PROGRESS_WIDTH / MAX_QUESTIONS);
+    updateProgressBar();
+
+    questionCounter++;
+    progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
+    progressBarTracker.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
+
+    if (questionCounter>= MAX_QUESTIONS){
         endGame();
         return;
     }
-
-    questionCounter++;
-    progressText.innerText = 'Question ${questionCounter}/${MAX_QUESTIONS}';
-    progressBarTracker.style.width = '${(questionCounter / MAX_QUESTIONS) * 100}%';
-
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
@@ -137,36 +143,39 @@ function getNewQuestion() {
     });
 
     availableQuestions.splice(questionIndex, 1);
-// update progress bar width
-    trackerWidth += (MAX_PROGRESS_WIDTH/MAX_QUESTIONS);
+    trackerWidth += (MAX_PROGRESS_WIDTH / MAX_QUESTIONS);
     updateProgressBar();
 }
-
+function updateProgressBar() {
+    const answeredQuestions = questionCounter - 1; 
+    const progressWidth = (answeredQuestions / MAX_QUESTIONS) * 100;
+    progressBarTracker.style.width = `${progressWidth}%`;
+}
 //selecting answer
 
 let canAnswer = true; 
 
 choices.forEach((choice, index) => {
-    choice.addEventListener('click', () => {
+    choice.addEventListener('click', e => {
         if (!canAnswer) return;
         
         canAnswer = false;
 
-        const selectedAnswer = choice;
-        const selectedText = selectedAnswer.innerText;
-        const correctAnswer = currentQuestion.answers[index].correct;
+        const selectedAnswerIndex = index;
+        const correctAnswer = currentQuestion.answers[selectedAnswerIndex].correct;
 
         if (correctAnswer) {
-            selectedAnswer.classList.add('correct');
+            choice.classList.add('correct');
             incrementScore();
         } else {
-            selectedAnswer.classList.add('incorrect');
+            choice.classList.add('incorrect');
         }
-
+        trackerWidth += (MAX_PROGRESS_WIDTH / MAX_QUESTIONS);
+        updateProgressBar();
 
  // Wait for 1 second before going to the next question
  setTimeout(() => {
-    selectedAnswer.classList.remove('correct', 'incorrect');
+    choice.classList.remove('correct', 'incorrect');
     getNewQuestion();
     canAnswer = true;
 }, 1000);
@@ -188,7 +197,6 @@ function endGame() {
 
     const scoreDisplay = document.createElement('div');
     scoreDisplay.innerText = 'Congratulations, you are finished! Your score:' + score;
-    scoreText.innerText = '';
    scoreText.appendChild(scoreDisplay);
 }
 
