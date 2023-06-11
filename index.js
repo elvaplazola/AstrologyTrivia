@@ -8,6 +8,7 @@ const progressBarTracker = document.querySelector('#progressBarTracker');
 // Game variables
 const SCORE_POINTS = 10;
 const MAX_QUESTIONS = 10;
+const MAX_PROGRESS_WIDTH = 0;
 
 let currentQuestion = {};
 let score = 0;
@@ -136,24 +137,38 @@ function getNewQuestion() {
     });
 
     availableQuestions.splice(questionIndex, 1);
+// update progress bar width
+    trackerWidth += (MAX_PROGRESS_WIDTH/MAX_QUESTIONS);
+    updateProgressBar();
 }
 
 //selecting answer
-choices.forEach(choice => {
-    choice.addEventListener('click', e => {
-        const selectedAnswer = e.target;
-        const correct = currentQuestion.answers.find(answer => answer.text === selectedAnswer.innerText);
 
-        if (correct) {
+let canAnswer = true; 
+
+choices.forEach((choice, index) => {
+    choice.addEventListener('click', () => {
+        if (!canAnswer) return;
+        
+        canAnswer = false;
+
+        const selectedAnswer = choice;
+        const selectedText = selectedAnswer.innerText;
+        const correctAnswer = currentQuestion.answers[index].correct;
+
+        if (correctAnswer) {
             selectedAnswer.classList.add('correct');
-            incrementScore(SCORE_POINTS);
+            incrementScore();
         } else {
             selectedAnswer.classList.add('incorrect');
         }
+
+
  // Wait for 1 second before going to the next question
  setTimeout(() => {
     selectedAnswer.classList.remove('correct', 'incorrect');
     getNewQuestion();
+    canAnswer = true;
 }, 1000);
 });
 });
@@ -161,8 +176,7 @@ choices.forEach(choice => {
 
 // Increase the score
 function incrementScore(points) {
-    score += points;
-    scoreText.innerText = score;
+    score += SCORE_POINTS;
 }
 
 //end of game & hide Score 
@@ -173,12 +187,10 @@ function endGame() {
     });
 
     const scoreDisplay = document.createElement('div');
-    scoreDisplay.innerText = 'Game Over! Your score:' + score;
-    document.body.appendChild(scoreDisplay);
+    scoreDisplay.innerText = 'Congratulations, you are finished! Your score:' + score;
+    scoreText.innerText = '';
+   scoreText.appendChild(scoreDisplay);
 }
-
-
-
 
 // Start the game when the page loads
 startGame();
